@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="album"
+            type="com.fedorov.itunes.ui.Album" />
+
+        <variable
+            name="delegate"
+            type="com.fedorov.itunes.ui.ItunesDelegate" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/default_padding">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:onClick="@{() -> delegate.openAlbumInfo(album.collectionId)}"
+                style="@style/RecyclerViewItemBackground">
+
+                <ImageView
+                    android:id="@+id/album_image"
+                    android:layout_width="@dimen/image_view_width"
+                    android:layout_height="@dimen/image_view_height"
+                    android:contentDescription="@string/album_image_desc"
+                    app:errorImage="@{@drawable/ic_error}"
+                    app:url="@{album.image}"
+                    tools:src="@mipmap/ic_launcher"
+                    android:layout_margin="5dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_margin="10dp"
+                    >
+
+                    <TextView
+                        android:id="@+id/collection_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:text="@{album.collectionName}"
+                        style="@style/RecyclerViewItemMainText"
+                        android:textSize="@dimen/collection_name_text_view_text_size"
+                        android:textStyle="bold"
+                        tools:text="@string/tools_track_name" />
+
+                    <TextView
+                        android:id="@+id/artist_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@{album.artistName}"
+                        style="@style/RecyclerViewItemMainText"
+                        android:textSize="@dimen/artist_name_text_view_text_size"
+                        tools:text="@string/tools_artist_name" />
+
+                    <TextView
+                        android:id="@+id/release_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{album.releaseDate}"
+                        style="@style/RecyclerViewItemSubText"
+                        android:textSize="@dimen/release_date_text_view_text_size"
+                        tools:text="@string/tools_release_date" />
+                </LinearLayout>
+
+            </LinearLayout>
+    </RelativeLayout>
+</layout>

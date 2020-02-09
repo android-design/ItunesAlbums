@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Itunes albums</string>
+    <string name="album_image_desc">Album image</string>
+    <string name="msg_nothing_found">Did not find anything</string>
+    <string name="hint_search_album">Search album</string>
+    <string name="tools_track_number">1</string>
+    <string name="tools_track_name">Try So Hard</string>
+    <string name="tools_artist_name">Yellow Claw</string>
+    <string name="tools_release_date">2020</string>
+</resources>
