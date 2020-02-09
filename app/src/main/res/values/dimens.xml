@@ -2,11 +2,11 @@
 <resources>
     <dimen name="default_padding">6dp</dimen>
     <dimen name="card_corner_radius">0dp</dimen>
-    <dimen name="album_card_view_height">110dp</dimen>
     <dimen name="default_margin">5dp</dimen>
     <dimen name="image_view_width">80dp</dimen>
     <dimen name="image_view_height">80dp</dimen>
     <dimen name="collection_name_text_view_text_size">16sp</dimen>
     <dimen name="artist_name_text_view_text_size">14sp</dimen>
     <dimen name="release_date_text_view_text_size">12sp</dimen>
+    <dimen name="album_item_layout_height">110dp</dimen>
 </resources>
