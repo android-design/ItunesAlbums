@@ -6,6 +6,6 @@ import com.fedorov.itunes.di.DaggerAppComponent
 
 class App : Application() {
     val appComponent: AppComponent by lazy {
-        DaggerAppComponent.factory().create()
+        DaggerAppComponent.create()
     }
 }

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/search_albums">
+
+    <fragment
+        android:id="@+id/search_albums"
+        android:name="com.fedorov.itunes.ui.searchAlbums.SearchAlbumsFragment"
+        android:label="Search albums"
+        tools:layout="@layout/fragment_search_albums">
+        <action
+            android:id="@+id/navigate_to_album_info"
+            app:destination="@id/album_info" />
+    </fragment>
+    <fragment
+        android:id="@+id/album_info"
+        android:name="com.fedorov.itunes.ui.albumInfo.AlbumInfoFragment"
+        android:label="Album info"
+        tools:layout="@layout/fragment_album_info">
+        <argument
+            android:name="collectionId"
+            app:argType="integer" />
+    </fragment>
+</navigation>

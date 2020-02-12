@@ -10,8 +10,8 @@
             type="com.fedorov.itunes.ui.Album" />
 
         <variable
-            name="delegate"
-            type="com.fedorov.itunes.ui.ItunesDelegate" />
+            name="listener"
+            type="com.fedorov.itunes.ui.searchAlbums.SearchAlbumsFragment.OnAlbumSelectedListener" />
     </data>
 
     <RelativeLayout
@@ -25,7 +25,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:onClick="@{() -> delegate.openAlbumInfo(album.collectionId)}"
+                android:onClick="@{() -> listener.openAlbumInfo(album.collectionId)}"
                 style="@style/RecyclerViewItemBackground">
 
                 <ImageView
