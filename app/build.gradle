@@ -61,9 +61,11 @@ dependencies {
 
     //Dagger
     def dagger_version = "2.25.4"
+
     implementation "com.google.dagger:dagger:$dagger_version"
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    implementation "com.google.dagger:dagger-android-support:$dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
 
     // Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'

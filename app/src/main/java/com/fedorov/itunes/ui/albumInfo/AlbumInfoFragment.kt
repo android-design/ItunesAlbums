@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
@@ -15,19 +15,22 @@ import com.fedorov.itunes.R
 import com.fedorov.itunes.adapters.ItunesAdapter
 import com.fedorov.itunes.ui.ItunesData
 import com.fedorov.itunes.ui.Status
+import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_album_info.*
 import kotlinx.android.synthetic.main.progressbar_main.*
+import javax.inject.Inject
 
-class AlbumInfoFragment : Fragment() {
+class AlbumInfoFragment : DaggerFragment() {
+
     private val args: AlbumInfoFragmentArgs by navArgs()
 
-    private val viewModel: AlbumInfoViewModel by lazy {
-        ViewModelProvider(this).get(
-            AlbumInfoViewModel::class.java
-        )
-    }
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val mAdapter = ItunesAdapter()
+    private val viewModel by viewModels<AlbumInfoViewModel> { viewModelFactory }
+
+    @Inject
+    lateinit var mAdapter: ItunesAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,27 +15,27 @@ import com.fedorov.itunes.R
 import com.fedorov.itunes.adapters.ItunesAdapter
 import com.fedorov.itunes.ui.ItunesData
 import com.fedorov.itunes.ui.Status
+import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_search_albums.*
 import kotlinx.android.synthetic.main.progressbar_main.*
+import javax.inject.Inject
 
 
-class SearchAlbumsFragment : Fragment() {
+class SearchAlbumsFragment : DaggerFragment() {
+
     private lateinit var listener: OnAlbumSelectedListener
-
-//    interface OnAlbumSelectedListener {
-//        fun onAlbumSelected(collectionId: Int)
-//    }
 
     interface OnAlbumSelectedListener {
         fun openAlbumInfo(collectionId: Int)
     }
 
-    private val viewModel: SearchAlbumsViewModel by lazy {
-        ViewModelProvider(this).get(
-            SearchAlbumsViewModel::class.java
-        )
-    }
-    private val mAdapter = ItunesAdapter()
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val viewModel by viewModels<SearchAlbumsViewModel> { viewModelFactory }
+
+    @Inject
+    lateinit var mAdapter: ItunesAdapter
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

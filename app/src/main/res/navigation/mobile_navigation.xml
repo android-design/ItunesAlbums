@@ -12,7 +12,9 @@
         tools:layout="@layout/fragment_search_albums">
         <action
             android:id="@+id/navigate_to_album_info"
-            app:destination="@id/album_info" />
+            app:destination="@id/album_info"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_fade_exit" />
     </fragment>
     <fragment
         android:id="@+id/album_info"

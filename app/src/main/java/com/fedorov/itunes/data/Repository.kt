@@ -12,32 +12,11 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-//class Repository(
-//    private val api: Api,
-//    private val dataMapper: DataMapper,
-//    private val cache: Cache
-//) {
-object Repository {
-    val okHttpClient =
-        OkHttpClient.Builder() // Increase the timeouts for slow connections(ex. EDGE)
-            .connectTimeout(1, TimeUnit.MINUTES)
-            .readTimeout(30, TimeUnit.SECONDS)
-            .writeTimeout(15, TimeUnit.SECONDS)
-            .build()
-
-    val baseUrl = "https://itunes.apple.com/"
-
-    val api = Retrofit.Builder()
-        .baseUrl(baseUrl)
-        .client(okHttpClient)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-        .create(Api::class.java)
-
-    val cache = CacheImpl()
-
-    val dataMapper = DataMapper()
-
+class Repository @Inject constructor(
+    private val api: Api,
+    private val dataMapper: DataMapper,
+    private val cache: Cache
+) {
     suspend fun getAlbums(albumName: String): List<ItunesData>? {
         // With new request should clean tracks cache.
         cache.clear()
