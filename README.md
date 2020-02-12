@@ -14,4 +14,4 @@ Application allow to search albums on Itunes and get full information about albu
 album and list of songs.
 
 ## Technology stack
-Android Architecture Components, Kotlin coroutines, Retrofit, Dagger, Data Binding, Picasso.
+Android Architecture Components, Single activity, Kotlin coroutines, Retrofit, Dagger, Data Binding, Picasso.
