@@ -6,9 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fedorov.itunes.databinding.AlbumItemRvBinding
 import com.fedorov.itunes.databinding.TrackItemRvBinding
 import com.fedorov.itunes.ui.Album
-import com.fedorov.itunes.ui.ItunesDelegate
 import com.fedorov.itunes.ui.ItunesData
 import com.fedorov.itunes.ui.Track
+import com.fedorov.itunes.ui.searchAlbums.SearchAlbumsFragment
 import javax.inject.Inject
 
 class ItunesAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -19,10 +19,10 @@ class ItunesAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView.Vi
     }
 
     private val mDataList: MutableList<ItunesData> = ArrayList()
-    private var delegate: ItunesDelegate? = null
+    private var listener: SearchAlbumsFragment.OnAlbumSelectedListener? = null
 
-    fun attachDelegate(delegate: ItunesDelegate) {
-        this.delegate = delegate
+    fun attachListener(listener: SearchAlbumsFragment.OnAlbumSelectedListener) {
+        this.listener = listener
     }
 
     fun setData(data: List<ItunesData>) {
@@ -37,7 +37,7 @@ class ItunesAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView.Vi
         return when (viewType) {
             VIEW_TYPE_ALBUM -> {
                 val binding = AlbumItemRvBinding.inflate(inflater, parent, false)
-                AlbumViewHolder(binding, delegate = delegate)
+                AlbumViewHolder(binding, delegate = listener)
             }
             else -> {
                 val binding = TrackItemRvBinding.inflate(inflater, parent, false)
@@ -64,12 +64,12 @@ class ItunesAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView.Vi
         }
     }
 
-    class AlbumViewHolder(private val binding: AlbumItemRvBinding, val delegate: ItunesDelegate?) :
+    class AlbumViewHolder(private val binding: AlbumItemRvBinding, val delegate: SearchAlbumsFragment.OnAlbumSelectedListener?) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(model: Album) {
             binding.album = model
-            binding.delegate = delegate
+            binding.listener = delegate
             binding.executePendingBindings()
         }
     }

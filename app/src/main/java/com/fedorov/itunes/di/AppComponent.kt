@@ -1,19 +1,12 @@
 package com.fedorov.itunes.di
 
+import com.fedorov.itunes.App
 import dagger.Component
-import com.fedorov.itunes.ui.albumInfo.AlbumInfoActivity
-import com.fedorov.itunes.ui.main.MainActivity
+import com.fedorov.itunes.ui.MainActivity
+import dagger.android.AndroidInjector
+import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [NetModule::class, CacheModule::class])
-interface AppComponent {
-
-    @Component.Factory
-    interface Factory {
-        fun create(): AppComponent
-    }
-
-    fun inject(activity: MainActivity)
-    fun inject(activity: AlbumInfoActivity)
-}
+@Component(modules = [AndroidSupportInjectionModule::class, SearchAlbumsModule::class, AlbumInfoModule::class, NetModule::class, CacheModule::class])
+interface AppComponent: AndroidInjector<App>

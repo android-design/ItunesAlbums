@@ -3,12 +3,13 @@ package com.fedorov.itunes.ui.base
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.fedorov.itunes.ui.Event
+import com.fedorov.itunes.ui.ItunesData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import com.fedorov.itunes.ui.ItunesData
-import com.fedorov.itunes.ui.Event
 
 abstract class BaseViewModel : ViewModel() {
+
     val eventData = MutableLiveData<Event>()
 
     fun makeRequest(
@@ -17,7 +18,7 @@ abstract class BaseViewModel : ViewModel() {
     ) {
         liveData.postValue(Event.loading())
 
-        this.viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 val response = request.invoke()
                 liveData.postValue(Event.success(response))

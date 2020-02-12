@@ -1,8 +1,13 @@
 package com.fedorov.itunes.data
 
 import com.fedorov.itunes.cache.Cache
+import com.fedorov.itunes.cache.CacheImpl
 import com.fedorov.itunes.data.network.Api
 import com.fedorov.itunes.ui.ItunesData
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -12,7 +17,6 @@ class Repository @Inject constructor(
     private val dataMapper: DataMapper,
     private val cache: Cache
 ) {
-
     suspend fun getAlbums(albumName: String): List<ItunesData>? {
         // With new request should clean tracks cache.
         cache.clear()
