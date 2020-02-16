@@ -1,9 +1,7 @@
 package com.fedorov.itunes.cache
 
-import com.fedorov.itunes.ui.ItunesData
-
-interface Cache {
+interface Cache<T> {
     fun clear()
-    fun get(collectionId: Int): List<ItunesData>?
-    fun put(collectionId: Int, value: List<ItunesData>)
+    fun get(collectionId: Int): T?
+    fun put(collectionId: Int, value: T)
 }

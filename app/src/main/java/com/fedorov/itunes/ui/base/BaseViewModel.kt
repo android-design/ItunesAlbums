@@ -4,17 +4,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fedorov.itunes.ui.Event
-import com.fedorov.itunes.ui.ItunesData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-abstract class BaseViewModel : ViewModel() {
+abstract class BaseViewModel<T> : ViewModel() {
 
-    val eventData = MutableLiveData<Event>()
+    val eventData = MutableLiveData<Event<T>>()
 
-    fun makeRequest(
-        liveData: MutableLiveData<Event>,
-        request: suspend () -> List<ItunesData>?
+    fun <T> makeRequest(
+        liveData: MutableLiveData<Event<T>>,
+        request: suspend () -> T?
     ) {
         liveData.postValue(Event.loading())
 

@@ -23,8 +23,6 @@ import javax.inject.Inject
 
 class SearchAlbumsFragment : DaggerFragment() {
 
-    private lateinit var listener: OnAlbumSelectedListener
-
     interface OnAlbumSelectedListener {
         fun openAlbumInfo(collectionId: Int)
     }
@@ -34,8 +32,9 @@ class SearchAlbumsFragment : DaggerFragment() {
 
     private val viewModel by viewModels<SearchAlbumsViewModel> { viewModelFactory }
 
-    @Inject
-    lateinit var mAdapter: ItunesAdapter
+    private lateinit var listener: OnAlbumSelectedListener
+
+    private val mAdapter = ItunesAdapter()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

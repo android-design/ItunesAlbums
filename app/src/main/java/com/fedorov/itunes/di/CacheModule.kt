@@ -2,6 +2,7 @@ package com.fedorov.itunes.di
 
 import com.fedorov.itunes.cache.Cache
 import com.fedorov.itunes.cache.CacheImpl
+import com.fedorov.itunes.data.model.Entity
 import dagger.Binds
 import dagger.Module
 
@@ -11,5 +12,5 @@ import dagger.Module
 @Module
 abstract class CacheModule {
     @Binds
-    abstract fun provideCache(cache: CacheImpl): Cache
+    abstract fun provideCache(cache: CacheImpl<Entity>): Cache<Entity>
 }

@@ -29,8 +29,7 @@ class AlbumInfoFragment : DaggerFragment() {
 
     private val viewModel by viewModels<AlbumInfoViewModel> { viewModelFactory }
 
-    @Inject
-    lateinit var mAdapter: ItunesAdapter
+    private val mAdapter = ItunesAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
