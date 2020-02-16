@@ -9,7 +9,7 @@ data class Album(
     val image: String,
     val genre: String,
     val releaseDate: String,
-    val trackCount: Int
+    val trackCount: String
 ) : ItunesData()
 
 data class Track(
@@ -18,7 +18,7 @@ data class Track(
     val image: String,
     val genre: String,
     val releaseDate: String,
-    val trackNumber: Int,
+    val trackNumber: String,
     val trackName: String,
-    val trackTimeMillis: Int
+    val trackTimeMillis: String
 ) : ItunesData()

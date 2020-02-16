@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity(),
 
                 val navHost = supportFragmentManager.findFragmentById(R.id.host_fragment)
                 navHost?.let { navFragment ->
-                    navFragment.childFragmentManager.primaryNavigationFragment?.let {fragment->
+                    navFragment.childFragmentManager.primaryNavigationFragment?.let { fragment ->
                         (fragment as SearchAlbumsFragment?)?.getAlbums(query)
                     }
                 }
@@ -72,13 +72,14 @@ class MainActivity : AppCompatActivity(),
     }
 
     fun hideSoftKeyboard() {
-        if (currentFocus == null) return
-        val inputMethodManager = getSystemService(
-            Activity.INPUT_METHOD_SERVICE
-        ) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(
-            currentFocus!!.windowToken,
-            0
-        )
+        currentFocus?.let {
+            val inputMethodManager = getSystemService(
+                Activity.INPUT_METHOD_SERVICE
+            ) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(
+                it.windowToken,
+                0
+            )
+        }
     }
 }

@@ -22,5 +22,5 @@ abstract class SearchAlbumsModule {
     @Binds
     @IntoMap
     @ViewModelKey(SearchAlbumsViewModel::class)
-    abstract fun bindViewModel(viewmodel: SearchAlbumsViewModel): ViewModel
+    abstract fun bindViewModel(viewModel: SearchAlbumsViewModel): ViewModel
 }

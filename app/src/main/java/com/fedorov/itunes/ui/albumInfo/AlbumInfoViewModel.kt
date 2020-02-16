@@ -1,14 +1,15 @@
 package com.fedorov.itunes.ui.albumInfo
 
-import com.fedorov.itunes.data.Repository
+import com.fedorov.itunes.domain.interactor.AlbumDetailInfoInteractor
+import com.fedorov.itunes.ui.ItunesData
 import com.fedorov.itunes.ui.base.BaseViewModel
 import javax.inject.Inject
 
-class AlbumInfoViewModel @Inject constructor(private val repository: Repository) : BaseViewModel() {
-    // Coroutine will be canceled when ViewModel will be cleared (depends on  ViewModel scope).
+class AlbumInfoViewModel @Inject constructor(private val albumDetailInfoInteractor: AlbumDetailInfoInteractor) :
+    BaseViewModel<List<ItunesData>>() {
     fun getTracks(collectionId: Int) {
         makeRequest(eventData) {
-            repository.getTracks(collectionId)
+            albumDetailInfoInteractor.getAlbumInfo(collectionId = collectionId)
         }
     }
 }
