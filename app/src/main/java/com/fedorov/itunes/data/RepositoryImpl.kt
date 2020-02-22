@@ -4,9 +4,7 @@ import com.fedorov.itunes.cache.Cache
 import com.fedorov.itunes.data.model.Entity
 import com.fedorov.itunes.data.network.Api
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
 class RepositoryImpl @Inject constructor(
     private val api: Api,
     private val cache: Cache<Entity>

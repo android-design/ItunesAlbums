@@ -1,4 +1,4 @@
-package com.fedorov.itunes.ui.searchAlbums
+package com.fedorov.itunes.ui.fragment
 
 import android.content.Context
 import android.os.Bundle
@@ -9,12 +9,13 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fedorov.itunes.R
 import com.fedorov.itunes.adapters.ItunesAdapter
-import com.fedorov.itunes.ui.ItunesData
-import com.fedorov.itunes.ui.Status
+import com.fedorov.itunes.ui.vm.AlbumsViewModel
+import com.fedorov.itunes.util.AlbumsDiffUtilsCallback
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_search_albums.*
 import kotlinx.android.synthetic.main.progressbar_main.*
@@ -30,7 +31,7 @@ class SearchAlbumsFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val viewModel by viewModels<SearchAlbumsViewModel> { viewModelFactory }
+    private val viewModel by viewModels<AlbumsViewModel> { viewModelFactory }
 
     private lateinit var listener: OnAlbumSelectedListener
 
@@ -60,7 +61,33 @@ class SearchAlbumsFragment : DaggerFragment() {
             listener
         )
 
-        observeNewEvents()
+        viewModel.getShowPB().observe(this, Observer { show ->
+            showProgressBar(show)
+        })
+
+        viewModel.getData().observe(this, Observer { data ->
+            data?.let {
+                val albumsDiffUtilCallback =
+                    AlbumsDiffUtilsCallback(mAdapter.mDataList, it)
+                val albumsDiffResult = DiffUtil.calculateDiff(albumsDiffUtilCallback)
+
+                mAdapter.setData(it)
+                albumsDiffResult.dispatchUpdatesTo(mAdapter)
+            }
+        })
+
+        viewModel.getEx().observe(this, Observer { error ->
+            error?.let {
+                it.message?.let { errorMessage ->
+                    Toast.makeText(
+                        context,
+                        errorMessage,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        })
+
         initRecyclerView()
     }
 
@@ -75,49 +102,12 @@ class SearchAlbumsFragment : DaggerFragment() {
         viewModel.getAlbums(albumName = albumName)
     }
 
-    private fun observeNewEvents() {
-        viewModel.eventData.observe(this, Observer {
-            when (it.status) {
-                Status.LOADING -> viewOnLoading()
-                Status.SUCCESS -> viewOnSuccess(it.data)
-                Status.ERROR -> viewOnError(it.error)
-            }
-        })
-    }
-
-    private fun viewOnLoading() {
-        showProgressBar()
-    }
-
-    private fun showProgressBar() {
+    private fun showProgressBar(show: Boolean) {
         progressBarGroup?.let {
-            it.visibility = View.VISIBLE
-        }
-    }
-
-    private fun hideProgressBar() {
-        progressBarGroup?.let {
-            it.visibility = View.INVISIBLE
-        }
-    }
-
-    private fun viewOnError(error: Exception?) {
-        hideProgressBar()
-        error?.let {
-            it.message?.let { errorMessage ->
-                Toast.makeText(
-                    context,
-                    errorMessage,
-                    Toast.LENGTH_SHORT
-                ).show()
+            when (show) {
+                true -> it.visibility = View.VISIBLE
+                else -> it.visibility = View.INVISIBLE
             }
-        }
-    }
-
-    private fun viewOnSuccess(data: List<ItunesData>?) {
-        hideProgressBar()
-        data?.let {
-            mAdapter.setData(it)
         }
     }
 }

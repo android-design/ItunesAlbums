@@ -3,26 +3,48 @@ package com.fedorov.itunes.ui.base
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.fedorov.itunes.ui.Event
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 abstract class BaseViewModel<T> : ViewModel() {
 
-    val eventData = MutableLiveData<Event<T>>()
+    private var job: Job? = null
 
     fun <T> makeRequest(
-        liveData: MutableLiveData<Event<T>>,
+        data: MutableLiveData<T>,
+        showProgressBar: MutableLiveData<Boolean>,
+        exception: MutableLiveData<Exception>,
         request: suspend () -> T?
     ) {
-        liveData.postValue(Event.loading())
-
-        viewModelScope.launch(Dispatchers.IO) {
+        cancelJob()
+        job = viewModelScope.launch(Dispatchers.IO) {
             try {
+                showProgressBar.postValue(true)
                 val response = request.invoke()
-                liveData.postValue(Event.success(response))
+                Timber.d(response.toString())
+                data.postValue(response)
             } catch (e: Exception) {
-                liveData.postValue(Event.error(e))
+                when (e) {
+                    !is CancellationException -> {
+                        Timber.e(e)
+                        exception.postValue(e)
+                    }
+                    else -> Timber.e(e)
+                }
+
+            } finally {
+                showProgressBar.postValue(false)
+            }
+        }
+    }
+
+    fun cancelJob() {
+        job?.let {
+            if (!it.isCancelled) {
+                it.cancel()
             }
         }
     }

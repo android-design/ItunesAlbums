@@ -1,8 +1,8 @@
 package com.fedorov.itunes.di
 
 import androidx.lifecycle.ViewModel
-import com.fedorov.itunes.ui.albumInfo.AlbumInfoFragment
-import com.fedorov.itunes.ui.albumInfo.AlbumInfoViewModel
+import com.fedorov.itunes.ui.fragment.AlbumInfoFragment
+import com.fedorov.itunes.ui.vm.AlbumsViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -21,6 +21,6 @@ abstract class AlbumInfoModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(AlbumInfoViewModel::class)
-    abstract fun bindViewModel(viewModel: AlbumInfoViewModel): ViewModel
+    @ViewModelKey(AlbumsViewModel::class)
+    abstract fun bindViewModel(viewModel: AlbumsViewModel): ViewModel
 }

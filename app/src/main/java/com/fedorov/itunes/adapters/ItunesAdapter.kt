@@ -8,7 +8,7 @@ import com.fedorov.itunes.databinding.TrackItemRvBinding
 import com.fedorov.itunes.ui.Album
 import com.fedorov.itunes.ui.ItunesData
 import com.fedorov.itunes.ui.Track
-import com.fedorov.itunes.ui.searchAlbums.SearchAlbumsFragment
+import com.fedorov.itunes.ui.fragment.SearchAlbumsFragment
 import javax.inject.Inject
 
 class ItunesAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -18,7 +18,8 @@ class ItunesAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView.Vi
         const val VIEW_TYPE_TRACK = 1
     }
 
-    private val mDataList: MutableList<ItunesData> = ArrayList()
+    val mDataList: MutableList<ItunesData> = ArrayList()
+
     private var listener: SearchAlbumsFragment.OnAlbumSelectedListener? = null
 
     fun attachListener(listener: SearchAlbumsFragment.OnAlbumSelectedListener) {
@@ -28,7 +29,7 @@ class ItunesAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView.Vi
     fun setData(data: List<ItunesData>) {
         mDataList.clear()
         mDataList.addAll(data)
-        notifyDataSetChanged()
+        //notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

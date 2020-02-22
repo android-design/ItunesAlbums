@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/search_albums"
-        android:name="com.fedorov.itunes.ui.searchAlbums.SearchAlbumsFragment"
+        android:name="com.fedorov.itunes.ui.fragment.SearchAlbumsFragment"
         android:label="Search albums"
         tools:layout="@layout/fragment_search_albums">
         <action
@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/album_info"
-        android:name="com.fedorov.itunes.ui.albumInfo.AlbumInfoFragment"
+        android:name="com.fedorov.itunes.ui.fragment.AlbumInfoFragment"
         android:label="Album info"
         tools:layout="@layout/fragment_album_info">
         <argument
