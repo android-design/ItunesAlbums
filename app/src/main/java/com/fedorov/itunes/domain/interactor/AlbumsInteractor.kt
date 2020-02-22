@@ -16,4 +16,13 @@ class AlbumsInteractor @Inject constructor(
 
         return dataMapper.mapEntityToAlbumsUIModel(data)
     }
+
+    suspend fun getAlbumInfo(collectionId: Int): List<ItunesData> {
+        val data = repository.getTracks(collectionId = collectionId)
+
+        val albumsMapped = dataMapper.mapEntityToAlbumsUIModel(data)
+        val tracksMapped = dataMapper.mapEntityToTracksUIModel(data)
+
+        return listOf(albumsMapped, tracksMapped).flatten()
+    }
 }

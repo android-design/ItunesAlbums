@@ -11,8 +11,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.fedorov.itunes.R
-import com.fedorov.itunes.ui.searchAlbums.SearchAlbumsFragment
-import com.fedorov.itunes.ui.searchAlbums.SearchAlbumsFragmentDirections
+import com.fedorov.itunes.ui.fragment.SearchAlbumsFragment
+import com.fedorov.itunes.ui.fragment.SearchAlbumsFragmentDirections
 import kotlinx.android.synthetic.main.toolbar.*
 
 
@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity(),
     SearchAlbumsFragment.OnAlbumSelectedListener {
 
     private val navController by lazy { findNavController(R.id.host_fragment) }
+    private val navHost by lazy { supportFragmentManager.findFragmentById(R.id.host_fragment) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +48,6 @@ class MainActivity : AppCompatActivity(),
         search_view_appbar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
 
-                val navHost = supportFragmentManager.findFragmentById(R.id.host_fragment)
                 navHost?.let { navFragment ->
                     navFragment.childFragmentManager.primaryNavigationFragment?.let { fragment ->
                         (fragment as SearchAlbumsFragment?)?.getAlbums(query)

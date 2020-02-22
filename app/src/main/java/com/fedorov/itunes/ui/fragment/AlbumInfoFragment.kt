@@ -1,4 +1,4 @@
-package com.fedorov.itunes.ui.albumInfo
+package com.fedorov.itunes.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,8 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fedorov.itunes.R
 import com.fedorov.itunes.adapters.ItunesAdapter
-import com.fedorov.itunes.ui.ItunesData
-import com.fedorov.itunes.ui.Status
+import com.fedorov.itunes.ui.vm.AlbumsViewModel
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_album_info.*
 import kotlinx.android.synthetic.main.progressbar_main.*
@@ -26,9 +25,7 @@ class AlbumInfoFragment : DaggerFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    private val viewModel by viewModels<AlbumInfoViewModel> { viewModelFactory }
-
+    private val viewModel by viewModels<AlbumsViewModel> { viewModelFactory }
     private val mAdapter = ItunesAdapter()
 
     override fun onCreateView(
@@ -41,8 +38,32 @@ class AlbumInfoFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.getShowPB().observe(this, Observer { show ->
+            showProgressBar(show)
+        })
+
+        viewModel.getData().observe(this, Observer { data ->
+            data?.let {
+                mAdapter.setData(it)
+                mAdapter.notifyDataSetChanged()
+            }
+        })
+
+        viewModel.getEx().observe(this, Observer { error ->
+            error?.let {
+                it.message?.let { errorMessage ->
+                    Toast.makeText(
+                        context,
+                        errorMessage,
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    requireActivity().onBackPressed()
+                }
+            }
+        })
+
         initRecyclerView()
-        observeNewEvents()
 
         viewModel.getTracks(args.collectionId)
     }
@@ -54,53 +75,18 @@ class AlbumInfoFragment : DaggerFragment() {
         }
     }
 
-    private fun observeNewEvents() {
-        viewModel.eventData.observe(this, Observer {
-            when (it.status) {
-                Status.LOADING -> viewOnLoading()
-                Status.SUCCESS -> viewOnSuccess(it.data)
-                Status.ERROR -> viewOnError(it.error)
-            }
-        })
-    }
 
-    private fun viewOnLoading() {
-        showProgressBar()
-    }
-
-    private fun showProgressBar() {
+    private fun showProgressBar(show: Boolean) {
         progressBarGroup?.let {
-            it.visibility = View.VISIBLE
-        }
-    }
-
-    private fun hideProgressBar() {
-        progressBarGroup?.let {
-            it.visibility = View.INVISIBLE
-        }
-    }
-
-    private fun viewOnError(error: Exception?) {
-        hideProgressBar()
-
-        error?.let {
-            it.message?.let { errorMessage ->
-                Toast.makeText(
-                    context,
-                    errorMessage,
-                    Toast.LENGTH_SHORT
-                ).show()
+            when (show) {
+                true -> it.visibility = View.VISIBLE
+                else -> it.visibility = View.INVISIBLE
             }
         }
-
-        // Return to previous screen.
-        requireActivity().onBackPressed()
     }
 
-    private fun viewOnSuccess(data: List<ItunesData>?) {
-        hideProgressBar()
-        data?.let {
-            mAdapter.setData(it)
-        }
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.cancelJob()
     }
 }

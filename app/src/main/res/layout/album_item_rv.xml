@@ -11,7 +11,7 @@
 
         <variable
             name="listener"
-            type="com.fedorov.itunes.ui.searchAlbums.SearchAlbumsFragment.OnAlbumSelectedListener" />
+            type="com.fedorov.itunes.ui.fragment.SearchAlbumsFragment.OnAlbumSelectedListener" />
     </data>
 
     <RelativeLayout
