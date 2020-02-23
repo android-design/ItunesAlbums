@@ -11,16 +11,13 @@ import timber.log.Timber
 
 abstract class BaseViewModel<T> : ViewModel() {
 
-    private var job: Job? = null
-
     fun <T> makeRequest(
         data: MutableLiveData<T>,
         showProgressBar: MutableLiveData<Boolean>,
         exception: MutableLiveData<Exception>,
         request: suspend () -> T?
-    ) {
-        cancelJob()
-        job = viewModelScope.launch(Dispatchers.IO) {
+    ): Job {
+        return viewModelScope.launch(Dispatchers.IO) {
             try {
                 showProgressBar.postValue(true)
                 val response = request.invoke()
@@ -37,14 +34,6 @@ abstract class BaseViewModel<T> : ViewModel() {
 
             } finally {
                 showProgressBar.postValue(false)
-            }
-        }
-    }
-
-    fun cancelJob() {
-        job?.let {
-            if (!it.isCancelled) {
-                it.cancel()
             }
         }
     }

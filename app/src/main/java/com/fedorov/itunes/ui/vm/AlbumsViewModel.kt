@@ -6,6 +6,7 @@ import com.fedorov.itunes.domain.interactor.AlbumsInteractor
 import com.fedorov.itunes.ui.ItunesData
 import com.fedorov.itunes.ui.base.BaseViewModel
 import com.fedorov.itunes.util.SingleLiveEvent
+import kotlinx.coroutines.Job
 import javax.inject.Inject
 
 class AlbumsViewModel @Inject constructor(private val albumsInteractor: AlbumsInteractor) :
@@ -15,8 +16,10 @@ class AlbumsViewModel @Inject constructor(private val albumsInteractor: AlbumsIn
     private val isShowProgressBar = MutableLiveData<Boolean>()
     private val exception = SingleLiveEvent<Exception>()
 
+    private var job: Job? = null
+
     fun getShowPB(): LiveData<Boolean> = isShowProgressBar
-    fun getEx(): LiveData<Exception> = exception
+    fun getException(): LiveData<Exception> = exception
     fun getData(): LiveData<List<ItunesData>> = data
 
     fun getAlbums(albumName: String) {
@@ -26,8 +29,18 @@ class AlbumsViewModel @Inject constructor(private val albumsInteractor: AlbumsIn
     }
 
     fun getTracks(collectionId: Int) {
-         makeRequest(data, isShowProgressBar, exception) {
+        cancelJob()
+
+        job = makeRequest(data, isShowProgressBar, exception) {
             albumsInteractor.getAlbumInfo(collectionId = collectionId)
+        }
+    }
+
+    fun cancelJob() {
+        job?.let {
+            if (!it.isCancelled) {
+                it.cancel()
+            }
         }
     }
 }

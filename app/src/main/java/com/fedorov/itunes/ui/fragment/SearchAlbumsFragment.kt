@@ -76,7 +76,7 @@ class SearchAlbumsFragment : DaggerFragment() {
             }
         })
 
-        viewModel.getEx().observe(this, Observer { error ->
+        viewModel.getException().observe(this, Observer { error ->
             error?.let {
                 it.message?.let { errorMessage ->
                     Toast.makeText(
