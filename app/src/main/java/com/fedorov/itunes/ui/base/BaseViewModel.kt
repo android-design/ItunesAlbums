@@ -9,7 +9,6 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 
 abstract class BaseViewModel<T> : ViewModel() {
-
     fun <T> makeRequest(
         data: MutableLiveData<T>,
         showProgressBar: MutableLiveData<Boolean>,
@@ -22,12 +21,11 @@ abstract class BaseViewModel<T> : ViewModel() {
             Timber.d(response.toString())
             data.postValue(response)
         } catch (e: Exception) {
+            Timber.e(e)
             when (e) {
                 !is CancellationException -> {
-                    Timber.e(e)
                     exception.postValue(e)
                 }
-                else -> Timber.e(e)
             }
         } finally {
             showProgressBar.postValue(false)
