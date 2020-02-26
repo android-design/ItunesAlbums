@@ -8,18 +8,20 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-abstract class BaseViewModel<T> : ViewModel() {
+abstract class BaseViewModel<E, T> : ViewModel() {
     fun <T> makeRequest(
         data: MutableLiveData<T>,
         showProgressBar: MutableLiveData<Boolean>,
         exception: MutableLiveData<Exception>,
-        request: suspend () -> T?
+        request: suspend () -> E,
+        makeBL: suspend (entity: E) -> T?
     ) = viewModelScope.launch(Dispatchers.IO) {
         try {
             showProgressBar.postValue(true)
             val response = request.invoke()
             Timber.d(response.toString())
-            data.postValue(response)
+            val parsedResponse = makeBL.invoke(response)
+            data.postValue(parsedResponse)
         } catch (e: Exception) {
             Timber.e(e)
             when (e) {

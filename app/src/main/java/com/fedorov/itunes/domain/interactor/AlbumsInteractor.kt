@@ -1,27 +1,20 @@
 package com.fedorov.itunes.domain.interactor
 
-import com.fedorov.itunes.data.Repository
+import com.fedorov.itunes.data.model.Entity
 import com.fedorov.itunes.domain.DataMapper
 import com.fedorov.itunes.ui.ItunesData
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
 class AlbumsInteractor @Inject constructor(
-    private val repository: Repository,
     private val dataMapper: DataMapper
 ) {
-    suspend fun getAlbums(albumName: String): List<ItunesData> {
-        val data = repository.getAlbums(albumName = albumName)
-
-        return dataMapper.mapEntityToAlbumsUIModel(data)
+    fun getAlbums(entity: Entity): List<ItunesData> {
+        return dataMapper.mapEntityToAlbumsUIModel(entity)
     }
 
-    suspend fun getAlbumInfo(collectionId: Int): List<ItunesData> {
-        val data = repository.getTracks(collectionId = collectionId)
-
-        val albumsMapped = dataMapper.mapEntityToAlbumsUIModel(data)
-        val tracksMapped = dataMapper.mapEntityToTracksUIModel(data)
+    fun getAlbumInfo(entity: Entity): List<ItunesData> {
+        val albumsMapped = dataMapper.mapEntityToAlbumsUIModel(entity)
+        val tracksMapped = dataMapper.mapEntityToTracksUIModel(entity)
 
         return listOf(albumsMapped, tracksMapped).flatten()
     }

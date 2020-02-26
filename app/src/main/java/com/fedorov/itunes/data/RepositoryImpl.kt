@@ -5,7 +5,9 @@ import com.fedorov.itunes.data.model.Entity
 import com.fedorov.itunes.data.network.Api
 import java.lang.ref.SoftReference
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class RepositoryImpl @Inject constructor(
     private val api: Api,
     private val softCache: SoftReference<Cache<Entity>>
