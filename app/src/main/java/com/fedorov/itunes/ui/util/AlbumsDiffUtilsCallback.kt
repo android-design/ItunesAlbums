@@ -1,10 +1,10 @@
-package com.fedorov.itunes.util
+package com.fedorov.itunes.ui.util
 
 import androidx.recyclerview.widget.DiffUtil
 import com.fedorov.itunes.ui.ItunesData
 
 class AlbumsDiffUtilsCallback<T>(
-    private val oldList: MutableList<ItunesData>,
+    private val oldList: List<T>,
     private val newList: List<T>
 ) : DiffUtil.Callback() {
 

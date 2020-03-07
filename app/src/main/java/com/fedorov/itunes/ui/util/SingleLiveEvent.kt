@@ -1,4 +1,4 @@
-package com.fedorov.itunes.util
+package com.fedorov.itunes.ui.util
 
 import androidx.annotation.MainThread
 import androidx.annotation.Nullable

@@ -1,4 +1,4 @@
-package com.fedorov.itunes.cache
+package com.fedorov.itunes.data.cache
 
 interface Cache<T> {
     fun clear()

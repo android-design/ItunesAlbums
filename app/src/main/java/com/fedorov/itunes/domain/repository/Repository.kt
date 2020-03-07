@@ -1,4 +1,4 @@
-package com.fedorov.itunes.data
+package com.fedorov.itunes.domain.repository
 
 import com.fedorov.itunes.data.model.Entity
 

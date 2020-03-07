@@ -1,6 +1,6 @@
 package com.fedorov.itunes.di
 
-import com.fedorov.itunes.data.Repository
+import com.fedorov.itunes.domain.repository.Repository
 import com.fedorov.itunes.data.RepositoryImpl
 import dagger.Binds
 import dagger.Module

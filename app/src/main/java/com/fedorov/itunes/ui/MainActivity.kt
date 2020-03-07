@@ -1,9 +1,7 @@
 package com.fedorov.itunes.ui
 
-import android.app.Activity
 import android.os.Bundle
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
@@ -54,10 +52,7 @@ class MainActivity : AppCompatActivity(),
                     }
                 }
 
-                hideSoftKeyboard()
-                search_view_appbar.clearFocus()
-
-                return true
+                return false
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
@@ -69,17 +64,5 @@ class MainActivity : AppCompatActivity(),
     override fun openAlbumInfo(collectionId: Int) {
         val directions = SearchAlbumsFragmentDirections.navigateToAlbumInfo(collectionId)
         navController.navigate(directions)
-    }
-
-    fun hideSoftKeyboard() {
-        currentFocus?.let {
-            val inputMethodManager = getSystemService(
-                Activity.INPUT_METHOD_SERVICE
-            ) as InputMethodManager
-            inputMethodManager.hideSoftInputFromWindow(
-                it.windowToken,
-                0
-            )
-        }
     }
 }

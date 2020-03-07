@@ -1,7 +1,7 @@
 package com.fedorov.itunes.di
 
-import com.fedorov.itunes.cache.Cache
-import com.fedorov.itunes.cache.CacheImpl
+import com.fedorov.itunes.data.cache.Cache
+import com.fedorov.itunes.data.cache.CacheImpl
 import com.fedorov.itunes.data.model.Entity
 import dagger.Module
 import dagger.Provides

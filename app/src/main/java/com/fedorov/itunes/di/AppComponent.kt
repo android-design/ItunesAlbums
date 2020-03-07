@@ -7,5 +7,5 @@ import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [AndroidSupportInjectionModule::class, SearchAlbumsModule::class, AlbumInfoModule::class, RepositoryModule::class, NetModule::class, CacheModule::class])
+@Component(modules = [AndroidSupportInjectionModule::class, SearchAlbumsModule::class, AlbumInfoModule::class, RepositoryModule::class, NetModule::class, CacheModule::class, UseCaseModule::class])
 interface AppComponent : AndroidInjector<App>

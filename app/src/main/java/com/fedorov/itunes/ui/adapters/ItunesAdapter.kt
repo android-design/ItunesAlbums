@@ -1,4 +1,4 @@
-package com.fedorov.itunes.adapters
+package com.fedorov.itunes.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -29,7 +29,6 @@ class ItunesAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView.Vi
     fun setData(data: List<ItunesData>) {
         mDataList.clear()
         mDataList.addAll(data)
-        //notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

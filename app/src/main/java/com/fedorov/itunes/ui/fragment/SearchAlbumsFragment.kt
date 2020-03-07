@@ -13,9 +13,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fedorov.itunes.R
-import com.fedorov.itunes.adapters.ItunesAdapter
+import com.fedorov.itunes.ui.adapters.ItunesAdapter
 import com.fedorov.itunes.ui.vm.AlbumsViewModel
-import com.fedorov.itunes.util.AlbumsDiffUtilsCallback
+import com.fedorov.itunes.ui.util.AlbumsDiffUtilsCallback
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_search_albums.*
 import kotlinx.android.synthetic.main.progressbar_main.*
@@ -61,11 +61,11 @@ class SearchAlbumsFragment : DaggerFragment() {
             listener
         )
 
-        viewModel.getShowPB().observe(this, Observer { show ->
+        viewModel.getShowPB().observe(viewLifecycleOwner, Observer { show ->
             showProgressBar(show)
         })
 
-        viewModel.getData().observe(this, Observer { data ->
+        viewModel.getData().observe(viewLifecycleOwner, Observer { data ->
             data?.let {
                 val albumsDiffUtilCallback =
                     AlbumsDiffUtilsCallback(mAdapter.mDataList, it)
@@ -76,7 +76,7 @@ class SearchAlbumsFragment : DaggerFragment() {
             }
         })
 
-        viewModel.getException().observe(this, Observer { error ->
+        viewModel.getException().observe(viewLifecycleOwner, Observer { error ->
             error?.let {
                 it.message?.let { errorMessage ->
                     Toast.makeText(

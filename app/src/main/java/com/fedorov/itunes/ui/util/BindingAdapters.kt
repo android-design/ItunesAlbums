@@ -1,4 +1,4 @@
-package com.fedorov.itunes.util
+package com.fedorov.itunes.ui.util
 
 import android.graphics.drawable.Drawable
 import android.widget.ImageView

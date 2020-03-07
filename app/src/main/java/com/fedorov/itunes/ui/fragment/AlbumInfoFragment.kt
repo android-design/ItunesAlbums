@@ -12,7 +12,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fedorov.itunes.R
-import com.fedorov.itunes.adapters.ItunesAdapter
+import com.fedorov.itunes.ui.adapters.ItunesAdapter
 import com.fedorov.itunes.ui.vm.AlbumsViewModel
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_album_info.*
@@ -38,18 +38,18 @@ class AlbumInfoFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getShowPB().observe(this, Observer { show ->
+        viewModel.getShowPB().observe(viewLifecycleOwner, Observer { show ->
             showProgressBar(show)
         })
 
-        viewModel.getData().observe(this, Observer { data ->
+        viewModel.getData().observe(viewLifecycleOwner, Observer { data ->
             data?.let {
                 mAdapter.setData(it)
                 mAdapter.notifyDataSetChanged()
             }
         })
 
-        viewModel.getException().observe(this, Observer { error ->
+        viewModel.getException().observe(viewLifecycleOwner, Observer { error ->
             error?.let {
                 it.message?.let { errorMessage ->
                     Toast.makeText(

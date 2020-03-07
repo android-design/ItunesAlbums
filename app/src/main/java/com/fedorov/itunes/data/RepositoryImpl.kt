@@ -1,8 +1,9 @@
 package com.fedorov.itunes.data
 
-import com.fedorov.itunes.cache.Cache
+import com.fedorov.itunes.data.cache.Cache
 import com.fedorov.itunes.data.model.Entity
 import com.fedorov.itunes.data.network.Api
+import com.fedorov.itunes.domain.repository.Repository
 import java.lang.ref.SoftReference
 import javax.inject.Inject
 import javax.inject.Singleton
